@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@MapperScan(basePackages = "com.prj.cosm.**.mapper")
+@MapperScan(basePackages = "com.prj.cosm.*.*.mapper")
 @SpringBootApplication
 public class CosmApplication {
 
