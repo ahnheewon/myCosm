@@ -1,0 +1,17 @@
+
+.column {
+    float : none;
+    padding: 10px;
+    height: 300px; /* Should be removed. Only for demonstration */
+    outline: 1px solid black;
+  }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  .container {
+    margin: 0 auto;
+  }
