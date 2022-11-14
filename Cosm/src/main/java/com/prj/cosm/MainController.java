@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainController {
 	// 첫 화면
 		@RequestMapping("/main")
-		public String main(Model model) {
+		public String main() {
 			return "index";
+		}
+		
+		@RequestMapping("/equipment/main")
+		public String equipmentMain() {
+			return "/equipment/main";
 		}
 }
