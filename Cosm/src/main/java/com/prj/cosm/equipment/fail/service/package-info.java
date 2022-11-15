@@ -1,1 +1,0 @@
-package com.prj.cosm.equipment.fail.service;
