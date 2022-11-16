@@ -3,11 +3,13 @@ package com.prj.cosm;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -56,6 +58,7 @@ public class MainController {
 			model.addAttribute("pno",eService.getProcessNo().getProcessNo());
 			model.addAttribute("eno",eService.getEquipNo().getEquipNo());
 			model.addAttribute("ep",eService.getProcessList());
+			model.addAttribute("epFirst",eService.getProcessList());
 			
 		return "/equipment/process";
 		}
@@ -89,15 +92,15 @@ public class MainController {
 		@PostMapping("/equipment/insertEquip")
 		public String insertEquip(equipVO vo, RedirectAttributes ratt) {
 				Map<String, Object> result = eService.insertEquip(vo);
-				ratt.addFlashAttribute("msg",result.get("result")+"건이 등록되었습니다.");
+				ratt.addFlashAttribute("msg",result.get("result")+"건이 등록되었습니다."); // 왜안나올까요??
 				return "redirect:/equipment/process";
 		}
 		
 		// 설비 단건 조회
-		@GetMapping("/equipment/getEquipInfo")
+		@GetMapping("/equipment/getEquipInfo/{equipNo}")
 		@ResponseBody
-		public String getEquipInfo(equipVO vo,Model model) {
-			model.addAttribute("equipNo",eService.getEquipInfo(vo).getEquipNo());
+		public String getEquipInfo(equipVO vo,Model model, @PathVariable int equipNo) {
+			model.addAttribute("equip",eService.getEquipInfo(equipNo));
 			return "equipment/process";
 			
 		}

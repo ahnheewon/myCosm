@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +27,8 @@ public class equipServiceImpl implements equipService {
 	}
 
 	@Override
-	public equipVO getEquipInfo(equipVO vo) {
-		return mapper.getEquipInfo(vo);
+	public equipVO getEquipInfo(@Param("equipNo")int equipNo) {
+		return mapper.getEquipInfo(getEquipNo());
 	}
 
 	@Override

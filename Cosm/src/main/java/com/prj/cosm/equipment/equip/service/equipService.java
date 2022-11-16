@@ -13,7 +13,7 @@ public interface equipService {
 	public List<equipVO> getEquipList();
 	
 	// 단건조회
-	public equipVO getEquipInfo(equipVO vo);
+	public equipVO getEquipInfo(@Param("equipNo")int equipNo);
 
 	// 등록
 	public Map insertEquip(equipVO vo);
