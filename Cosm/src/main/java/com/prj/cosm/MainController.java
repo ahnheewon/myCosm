@@ -1,10 +1,12 @@
 package com.prj.cosm;
 
+
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,7 @@ import com.prj.cosm.equipment.equip.service.equipVO;
 @CrossOrigin ("*")
 public class MainController {
 	
+
 	@Autowired
 	equipService eService;
 		
@@ -29,21 +32,21 @@ public class MainController {
 			return "index";
 		}
 		
-		
+		//
 		@RequestMapping("/equipment/main")
 		public String equipmentMain() {
 			return "/equipment/main";
 		}
 		
+		// pno, eno 값뿌리기.
 		@RequestMapping("/equipment/process")
-		public ModelAndView equipmentProgress() {
+		public String equipmentProgress(Model model) {
 			
-			ModelAndView view = new ModelAndView();
-			view.setViewName("/equipment/process");
-			view.addObject("pno",eService.getProcessNo().getProcessNo());
-			view.addObject("eno",eService.getEquipNo().getEquipNo());
+			model.addAttribute("pno",eService.getProcessNo().getProcessNo());
+			model.addAttribute("eno",eService.getEquipNo().getEquipNo());
+			model.addAttribute("ep",eService.getProcessList());
 			
-		return view;
+		return "/equipment/process";
 		}
 				
 		// 공정 전체 리스트 조회 데이터
@@ -77,6 +80,15 @@ public class MainController {
 				Map<String, Object> result = eService.insertEquip(vo);
 				ratt.addFlashAttribute("msg",result.get("result")+"건이 등록되었습니다.");
 				return "redirect:/equipment/process";
+		}
+		
+		// 설비 단건 조회
+		@GetMapping("/equipment/getEquipInfo")
+		@ResponseBody
+		public String getEquipInfo(equipVO vo,Model model) {
+			model.addAttribute("equipInfo",eService.getEquipInfo(vo).getEquipName());
+			return "equipment/process";
+			
 		}
 		
 		

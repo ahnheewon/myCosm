@@ -17,12 +17,14 @@ public class equipVO {
 	//설비
 	private int equipNo;
 	private String equipName;
-	private int equipProcess;
+	private int equipProcess; // 적용공정
 	private String equipType;
 	private String equipPurpose;
 	private int equipCheckCycle;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date equipDate;
+	
 	private int equipRate;
 	private int equipStdVibe;
 	private int equipStdTemp;
@@ -31,8 +33,10 @@ public class equipVO {
 	
 	// 설비별 가동 시간
 	private int timeEquipNo;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date timeStartDate;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date timeEndDate;
 	
@@ -41,6 +45,7 @@ public class equipVO {
 	private int rtcEquipNo;
 	private int rtcVibe;
 	private int rtcTemp;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date rtcDate;
 	
@@ -53,10 +58,13 @@ public class equipVO {
 	// 고장관련
 	private int failNo;
 	private int failEquipNo;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date failDate;
+	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date failRepairDate;
+	
 	private String failRepairContent;
 	private String failEffect;
 	private String failCode;
