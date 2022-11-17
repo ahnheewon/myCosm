@@ -106,9 +106,9 @@ public class MainController {
 		// 설비 수정!!!
 		@PostMapping("/equipment/updateEquip")
 		@ResponseBody
-		public String updateEquip(EquipVO vo) {
+		public EquipVO updateEquip(EquipVO vo) {
 			eService.updateEquip(vo);
-		return "redirect:/equipment/process";
+		return vo; //"{re:true}"
 		}
 		
 		// 공정 단건 조회
