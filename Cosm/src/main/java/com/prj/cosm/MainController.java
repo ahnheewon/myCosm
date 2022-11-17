@@ -88,7 +88,7 @@ public class MainController {
 		return eService.getEquipList();
 		}
 		
-		// 설비 등록 (설비별 가동시간도 함께 등록이 돼요!!)
+		// 설비 등록 (설비별 가동시간도 함께 등록이 돼요!)
 		@PostMapping("/equipment/insertEquip")
 		public String insertEquip(EquipVO vo) {
 			eService.insertEquip(vo);
@@ -101,6 +101,14 @@ public class MainController {
 		public EquipVO getEquipInfo(Model model, int equipNo) {
 			return eService.getEquipInfo(equipNo);
 			
+		}
+		
+		// 설비 수정!!!
+		@PostMapping("/equipment/updateEquip")
+		@ResponseBody
+		public String updateEquip(EquipVO vo) {
+			eService.updateEquip(vo);
+		return "redirect:/equipment/process";
 		}
 		
 		// 공정 단건 조회

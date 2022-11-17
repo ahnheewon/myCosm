@@ -53,6 +53,31 @@
 	</insert>
 	
 	
+	<!-- 설비 수정 -->
+	<update id="updateEquip" parameterType="equipVO">
+	UPDATE equip
+	<set>
+		<if test="equipName !=null and !equipName.equals('')">
+		equipName = #{equipName},
+		</if>
+		<if test="equipType !=null and !equipType.equals('')">
+		equipType = #{equipType},
+		</if>
+		<if test="equipStdVibe !=null">
+		equipStdVibe = #{equipStdVibe},
+		</if>
+		<if test="equipStdTemp !=null">
+		equipStdTemp = #{equipStdTemp},
+		</if>
+		<if test="equipPurpose !=null and !equipPurpose.equals('')">
+		equipPurpose = #{equipPurpose},
+		</if>									
+	</set>
+	
+		WHERE= equipNo = #{equipNo}
+	
+	</update>
+	
 	<!-- 입력될 설비 번호 조회 -->
 	<select id="getEquipNo" resultType="equipVO">
 		SELECT NVL(MAX(equip_no),0) + 1 AS equip_no

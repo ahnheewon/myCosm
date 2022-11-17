@@ -7,11 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<!-- toast grid-->
-
 <!-- style and js -->
 <link rel="stylesheet" href="/equipmentCss/main.css"/>
-<!-- bootstrap@5.2.2 -->
 
 <style type="text/css">
 .textWidth {
@@ -151,55 +148,59 @@
 	</div>
 	
 	<!-- The Modal 3 설비 단건 조회 모달 -->
-	<div class="modal fade" id="myModal3">
+	<div class="modal fade" id="myModal3" data-backdrop="static" data-keyboard="false">
 		
-		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-dialog modal-dialog-centered" >
 		<div class="modal-content">
 	
-			<!-- Modal Header -->
-			<div class="modal-header">
-			<h4 class="modal-title">설비 정보</h4>
-			<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-			</div>
+				<!-- Modal Header -->
+				<div class="modal-header">
+				<h4 class="modal-title">설비 정보</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
 	
-		
-			<!-- Modal body -->
-			<div id="equipInfo" class="modal-body">
-			<table class="table">
-					
-                    <tr>
-						<td>설비명</td>
-                        <td><input class="form-control" id="selectEquipName" name="equipName" type="text"  readonly></td> <!-- th:value="${equip.equipName}" -->
-                        <td>설비타입</td>
-                        <td><input class="form-control" id="selectEquipType" name="equipType" type="text" readonly></td>		              
-                    </tr>
-                     <tr>
-                        <td>정상진동</td>
-                        <td><input class="form-control" id="selectEquipStdVibe" name="equipStdVibe" type="text" readonly></td>
-                        <td>정상온도</td>
-                        <td><input class="form-control" id="selectEquipStdTemp" name="equipStdTemp" type="text" readonly></td>
-                    </tr>
-                     <tr>
-                        <td>설치시기</td>
-                        <td><input class="form-control" id="selectEquipDate" name="equipDate" type="text" readonly></td>
-                        <td>가동시간</td>
-                        <td><input class="form-control" id="selectEquipStartDate" name="equipStartDate" type="text" readonly></td>
-                        <td>정지시간</td>
-                        <td><input class="form-control" id="selectEquipEndDate" name="equipEndDate" type="text" readonly></td>
-                    </tr>
-                    <tr>
-                        <td>설비설명</td>
-                        <td><textarea class="form-control textWidth" id="selectEquipPurpose" name="equipPurpose" rows="5" readonly></textarea></td>
-                    </tr>                  
-                </table>
-			</div>
+			<form id="updateForm" method="post">
+			<!-- <sec:csrfInput/> -->
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				
+				<!-- Modal body -->
+				<div id="equipInfo" class="modal-body">
+				<table class="table">
+						
+	                    <tr>
+							<td>설비명</td>
+	                        <td><input class="form-control wantUpdate" id="selectEquipName" name="equipName" type="text"  readonly></td> <!-- th:value="${equip.equipName}" -->
+	                        <td>설비타입</td>
+	                        <td><input class="form-control wantUpdate" id="selectEquipType" name="equipType" type="text" readonly></td>		              
+	                    </tr>
+	                     <tr>
+	                        <td>정상진동</td>
+	                        <td><input class="form-control wantUpdate" id="selectEquipStdVibe" name="equipStdVibe" type="text" readonly></td>
+	                        <td>정상온도</td>
+	                        <td><input class="form-control wantUpdate" id="selectEquipStdTemp" name="equipStdTemp" type="text" readonly></td>
+	                    </tr>
+	                     <tr>
+	                        <td>설치시기</td>
+	                        <td><input class="form-control" id="selectEquipDate" name="equipDate" type="text" readonly></td>
+	                        <td>가동시간</td>
+	                        <td><input class="form-control" id="selectEquipStartDate" name="equipStartDate" type="text" readonly></td>
+	                        <td>정지시간</td>
+	                        <td><input class="form-control" id="selectEquipEndDate" name="equipEndDate" type="text" readonly></td>
+	                    </tr>
+	                    <tr>
+	                        <td>설비설명</td>
+	                        <td><textarea class="form-control wantUpdate textWidth" id="selectEquipPurpose" name="equipPurpose" rows="5" readonly></textarea></td>
+	                    </tr>                  
+	                </table>
+				</div>
 	
-			<!-- Modal footer -->
-			<div class="modal-footer">
-			<button type="submit" class="btn btn-primary">수정</button>
-			<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
-		</div>
-
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="button" onclick="updateBtn()" class="btn btn-primary updateBtn">수정</button>
+						<button type="button" onclick="deleteBtn()" class="btn btn-primary">삭제</button>
+						<button type="button"  onclick="cancelUpdate()"  class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+					</div>
+			</form>
 	
 		</div>
 		</div>
@@ -241,7 +242,7 @@
 			<!-- Modal footer -->
 			<div class="modal-footer">
 			<button type="submit" class="btn btn-primary">수정</button>
-			<button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+			<button type="button"class="btn btn-danger"  data-bs-dismiss="modal">취소</button>
 		</div>
 
 	
@@ -257,6 +258,70 @@
 	function changeSelect() { 
 		let ep = document.querySelector('#equipProcessSelect').value;
 		document.querySelector('#equipProcess').value = parseInt(ep);
+	}
+	
+	// 설비 수정 하려는 함수
+	function updateBtn() {
+		
+		console.log("수정버튼 클릭");
+		const wantUpdate = document.getElementsByClassName('wantUpdate');	 
+		for (var i = 0; i< wantUpdate.length; i++) {
+            wantUpdate[i].readOnly = false;
+            wantUpdate[i].required = true; 
+        }
+		document.querySelector('.updateBtn').innerText='저장';
+		document.querySelector('.updateBtn').setAttribute('onclick','updateEquip()');
+		//동시에 버튼의 onclick값도 바뀌게^^
+			           
+	}
+
+	//설비 수정 함수
+	
+	function updateEquip() {
+
+		 url="/equipment/updateEquip"
+		    fetch(url,{method: 'POST'})
+		    .then(res=>console.log(res))
+		    .then(obj=>{
+		        console.log(obj);
+			})
+			.catch((error) => console.log("error:", error));
+			
+			document.querySelector('.updateBtn').innerText='수정';
+			document.querySelector('.updateBtn').setAttribute('type','submit');
+			document.querySelector('.updateBtn').setAttribute('onclick','updateBtn()');		
+			const modal = document.getElementById('myModal3');
+		
+		// 모달 꺼야되는데 ㅠㅠ modal.modal('hide');
+
+	   
+	}
+	
+	
+	//설비 수정 취소 함수
+	
+	function cancelUpdate() {
+		console.log("수정 취소버튼 클릭");
+		const wantUpdate = document.getElementsByClassName('wantUpdate');	 
+		for (var i = 0; i< wantUpdate.length; i++) {
+            wantUpdate[i].readOnly =true;
+            wantUpdate[i].required = false;
+        }
+		document.querySelector('.updateBtn').innerText='수정';
+		document.querySelector('.updateBtn').setAttribute('onclick','updateBtn()');
+	}
+	
+
+	// 설비 삭제 하는 함수
+	
+	function deleteBtn() {
+	
+		/* url="/equipment/deleteEquip"
+		    fetch(url,{method: 'POST'}) 
+		    .then(res=>res.json())
+		    .then(obj=>{
+
+		    }) */
 	}
 
 /*  공정 리스트 불러오는 아작스 */
@@ -389,7 +454,8 @@
 	    	
 	    	if(ev.columnName == 'equipNo'){
 				if(equip.getValue(ev.rowKey,ev.columnName) != null){
-		    	const myModal3 = new bootstrap.Modal('#myModal3')
+		    	const myModal3 = new bootstrap.Modal('#myModal3',{backdrop: 'static',keyboard:false})
+		    	// 생성 시 모달 속성을 넣어줍니다.
 		    	const modalToggle1 = document.getElementById('myModal3'); 
 		    	
 				getEquipNo(eno);
@@ -407,7 +473,8 @@
 	    	
 	    	if(ev.columnName == 'processNo'){
 				if(process.getValue(ev.rowKey,ev.columnName) != null){
-		    	const myModal4 = new bootstrap.Modal('#myModal4')
+		    	const myModal4 = new bootstrap.Modal('#myModal4',{backdrop: 'static',keyboard:false})
+		    	// 생성 시 모달 속성을 넣어줍니다.
 		    	const modalToggle2 = document.getElementById('myModal4'); 
 		    	
 				getProcessNo(pno);
