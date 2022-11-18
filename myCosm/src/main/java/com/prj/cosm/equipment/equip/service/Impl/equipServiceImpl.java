@@ -17,9 +17,10 @@ public class equipServiceImpl implements EquipService {
 
 	@Autowired
 	EquipMapper mapper;
+//============================================================================================================================
 	
-	//설비
-	
+																			//설비
+
 	@Override
 	public List<EquipVO> getEquipList() {
 		
@@ -73,7 +74,7 @@ public class equipServiceImpl implements EquipService {
 
 //============================================================================================================================
 	
-	//공정 
+																			//공정 
 	
 	@Override
 	public EquipVO getProcessNo() {
@@ -121,12 +122,83 @@ public class equipServiceImpl implements EquipService {
 		return mapper.updateDeleteProcessNo(processNo);
 	}
 
+//===================================================================================================
 	
+																			//점검
+	
+	@Override
+	public List<EquipVO> getTestList() {
+		return mapper.getTestList();
+	}
 
+	@Override
+	public EquipVO getTestInfo(int testNo) {
+		return mapper.getTestInfo(testNo);
+	}
 
+	@Override
+	public int insertTest(EquipVO vo) {
+		return mapper.insertTest(vo);
+	}
 
+	@Override
+	public int updateTest(EquipVO vo) {
+		return mapper.updateTest(vo);
+	}
 
+	@Override
+	public int deleteTest(int testNo) {
+		return mapper.deleteTest(testNo);
+	}
 
+	@Override
+	public int updateDeleteTestNo(int testNo) {
+		return mapper.updateDeleteTestNo(testNo);
+	}
+
+	@Override
+	public EquipVO getTestNo() {
+		return mapper.getTestNo();
+	}
+
+//===================================================================================================
+	
+																			//고장
+	
+	@Override
+	public List<EquipVO> getFailList() {
+		return mapper.getFailList();
+	}
+
+	@Override
+	public EquipVO getFailInfo(int failNo) {
+		return mapper.getFailInfo(failNo);
+	}
+
+	@Override
+	public int insertFail(EquipVO vo) {
+		return mapper.insertFail(vo);
+	}
+
+	@Override
+	public int updateFail(EquipVO vo) {
+		return mapper.updateFail(vo);
+	}
+
+	@Override
+	public int deleteFail(int failNo) {
+		return mapper.deleteFail(failNo);
+	}
+
+	@Override
+	public int updateDeleteFailNo(int failNo) {
+		return mapper.updateDeleteFailNo(failNo);
+	}
+
+	@Override
+	public EquipVO getFailNo() {
+		return mapper.getFailNo();
+	}
 
 
 	

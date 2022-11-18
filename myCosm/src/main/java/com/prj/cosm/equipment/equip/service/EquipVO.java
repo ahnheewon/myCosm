@@ -55,6 +55,17 @@ public class EquipVO {
 	private String processContent;
 	private int processSeq;
 	
+	// 점검관련
+	
+	private int testNo;
+	private int testEquipNo;
+	private String testDate;
+	private String testReason;
+	private String testPs;
+	private String testYn;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date testDueDate;
+	
 	// 고장관련
 	private int failNo;
 	private int failEquipNo;

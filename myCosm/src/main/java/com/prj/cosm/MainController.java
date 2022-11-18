@@ -46,26 +46,16 @@ public class MainController {
 			return "/equipment/main";
 		}
 		
-		//
-		@RequestMapping("/equipment/main")
-		public String equipmentMain() {
-			return "/equipment/main";
-		}
-		
-		// pno, eno 값뿌리기.
+		// 공정관리 페이지 이동, // 매개변수 pno, eno, ep 데이터 뿌리기.
 		@RequestMapping("/equipment/process")
-		public String equipmentProgress(Model model) {
+		public String equipmentProcess(Model model) {
 			
 			model.addAttribute("pno",eService.getProcessNo().getProcessNo());
 			model.addAttribute("eno",eService.getEquipNo().getEquipNo());
 			model.addAttribute("ep",eService.getProcessList());
-			model.addAttribute("epFirst",eService.getProcessList());
 			
 		return "/equipment/process";
-		}
-				
-		
-		
+		}	
 		
 		// 설비 전체 리스트 조회 데이터
 		@GetMapping("/equipment/equipList")
@@ -120,7 +110,7 @@ public class MainController {
 		// 공정 전체 리스트 조회 데이터
 		@GetMapping("/equipment/processList")
 		@ResponseBody
-		public List<EquipVO> progress(){
+		public List<EquipVO> process(){
 				
 		return eService.getProcessList();
 		}
@@ -163,7 +153,47 @@ public class MainController {
 			int result= eService.updateDeleteProcessNo(processNo);
 			return result; 
 		}		
+
+//================================================================================================================================	
+
+	// 보수 관리 페이지 이동화면
+	@RequestMapping("/equipment/maintenance")
+	public String equipmentMaintenance(Model model) {
+		return "/equipment/maintenance";
+	}
+	
+	// 점검 전체 리스트 조회 데이터
+	@GetMapping("/equipment/testList")
+	@ResponseBody
+	public List<EquipVO> test(){
+					
+	return eService.getTestList();
+	}
 		
+	// 고장 전체 리스트 조회 데이터
+	@GetMapping("/equipment/failList")
+	@ResponseBody
+	public List<EquipVO> fail(){
+					
+	return eService.getFailList();
+	}
+	
+//================================================================================================================================
+
+		// 부품 관리 페이지 이동화면
+		@RequestMapping("/equipment/part")
+		public String equipmentPart(Model model) {
+			return "/equipment/part";
+		}
+//================================================================================================================================	
+
+		// 공사 관리 페이지 이동화면
+		@RequestMapping("/equipment/construction")
+		public String equipmentConstruction(Model model) {
+			return "/equipment/construction";
+		}
+		
+//================================================================================================================================	
 		
 	// 첫 화면
 	@GetMapping("/main")

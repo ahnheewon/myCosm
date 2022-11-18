@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{/layout/layout.html}">
+<head>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<!-- style and js -->
+<link rel="stylesheet" href="/equipmentCss/main.css"/>
+
+</head>
+<body>
+
+	<div layout:fragment="content" style="height: 900px; overflow: scroll">
+			  <h2>보수 관리</h2>
+
+			  <div class="row">
+			  
+			        <div class="column">
+			          <h5>점검 내역 관리</h5>
+						  <div id="test">
+						  </div>
+			        </div>
+			
+			        <div class="column">
+			          <h5>고장 내역 관리</h5>
+				          <div id="fail">
+				          </div>
+			        </div>
+			        		
+			  </div>
+		  
+	
+
+
+
+<script type="text/javascript">
+/* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT */
+/* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT */	
+
+
+/* 점검 리스트 불러오는 아작스 */
+
+	url="/equipment/testList"
+	fetch(url) 
+	.then(res=>res.json())
+	.then(obj=>{
+	    console.log(obj);
+	    testGrid.resetData(obj);
+    
+	})
+
+/* 고장 리스트 불러오는 아작스 */
+    
+    url="/equipment/failList"
+    fetch(url) 
+    .then(res=>res.json())
+    .then(obj=>{
+        console.log(obj);
+        failGrid.resetData(obj);
+        
+    })
+
+
+/*  점검 그리드  */	
+	const testGrid = new tui.Grid({
+			    el: document.querySelector('#test'),
+			    pagination:true,
+				pageOptions: {
+					useClient: true,
+					perPage: 4
+				},
+				rowHeaders: ['checkbox'],
+			    columns: [
+			    {
+			        header: '설비명',
+			        name: 'equipName'
+			    },
+			    {
+			        header: '점검예정일',
+			        name: 'testDueDate'
+			    },
+			    {
+			        header: '점검이유',
+			        name: 'testReason'
+			    },
+			    {
+			        header: '특이사항',
+			        name: 'testPs'
+			    }
+			    ]
+			});
+
+
+/*  고장 그리드  */	
+		const failGrid = new tui.Grid({
+		    el: document.querySelector('#fail'),
+		    pagination:true,
+			pageOptions: {
+				useClient: true,
+				perPage: 4
+			},
+		    columns: [
+		    {
+		        header: '설비명',
+		        name: 'equipName'
+		    },
+		    {
+		        header: '고장발생일',
+		        name: 'failDate'
+		    },
+		    {
+		        header: '고장내역',
+		        name: 'failContent'
+		    },
+		    {
+		        header: '특이사항',
+		        name: 'failPs'
+		    }
+		    ]
+		});
+
+</script>
+</div>
+</body>
+</html>

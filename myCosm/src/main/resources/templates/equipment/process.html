@@ -157,7 +157,7 @@
 	
 				<!-- Modal Header -->
 				<div class="modal-header">
-				<h4 class="modal-title">설비 정보</h4>
+				<h4 class="modal-title"><span id="whatEno"></span>설비 정보</h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
 	
@@ -219,7 +219,7 @@
 	
 			<!-- Modal Header -->
 			<div class="modal-header">
-			<h4 class="modal-title">공정 정보</h4>
+			<h4 class="modal-title"><span id="whatPno"></span>공정 정보</h4>
 			<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 	
@@ -561,7 +561,6 @@
 /*  공정 그리드  */	
 		const process = new tui.Grid({ 
 		    el: document.querySelector('#processList'),
-		    scrollY: false,
 			pagination:true,
 			pageOptions: {
 				useClient: true,
@@ -632,6 +631,7 @@
 				getEquipNo(eno);
 		    	myModal3.show(modalToggle1);
 				}
+				document.getElementById('whatEno').innerText=eno+"번 ";
 	    	}
 		});
 	    
@@ -651,6 +651,9 @@
 		    	
 				getProcessNo(pno);
 		    	myModal4.show(modalToggle2);
+		    	
+				document.getElementById('whatPno').innerText=pno+"번 ";
+
 				}
 	    	}
 		});

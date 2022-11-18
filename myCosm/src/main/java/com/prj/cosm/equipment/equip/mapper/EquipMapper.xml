@@ -4,7 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.prj.cosm.equipment.equip.mapper.EquipMapper">
- 	
+<!-- ############################################################################################  -->																						 																						
+ 																					<!-- 설비 -->	
 	
 	<!-- 설비 전체 리스트 -->
 	<select id="getEquipList" resultType="equipVO">
@@ -52,8 +53,7 @@
 		        <if test="timeEndDate != null and timeEndDate != ''">,#{timeEndDate}</if>
 		        )
 	</insert>
-	
-	
+		
 	<!-- 설비 수정 -->
 	<update id="updateEquip" parameterType="equipVO">
 	UPDATE equip
@@ -110,6 +110,9 @@
 		FROM EQUIP
 	</select>
 	
+<!-- ############################################################################################  -->
+																					<!-- 공정  -->	
+	
 	<!-- 공정 전체 리스트 -->
 	<select id="getProcessList" resultType="equipVO">
 		SELECT *
@@ -117,7 +120,7 @@
 		ORDER BY PROCESS_NO
 	</select>
 	
-	<!-- 공정 단건조회 -->
+	<!-- 공정 단건 조회 -->
 	<select id="getProcessInfo" parameterType="Integer" resultType="equipVO">
 		SELECT process_no,process_name, process_content, process_seq
 		FROM process
@@ -171,5 +174,71 @@
 	SET PROCESS_NO = PROCESS_NO-1
 	WHERE PROCESS_NO <![CDATA[>]]> #{processNo}
 	</update>
+	
+<!-- ############################################################################################  -->
+																					<!-- 점검  -->
+
+	<!-- 점검 전체 리스트 -->
+	<select id="getTestList" resultType="equipVO">
+	SELECT * 
+	FROM TEST
+	</select>
+	
+	<!-- 점검 단건 조회-->
+	<select id="getTestInfo" parameterType="Integer" resultType="equipVO">
+	
+	</select>
+	
+	<!-- 점검일정 등록 -->
+	<insert id="insertTest" parameterType="equipVO">
+	</insert>
+	
+	<!-- 점검 수정 -->
+	<update id="updateTest" parameterType="equipVO">
+	</update>
+	
+	<!-- 점검 삭제 -->
+	<delete id="deleteTest" parameterType="Integer">
+	</delete>
+	
+	<!-- 점검 삭제 시 번호 정렬 update문-->
+	<update id="updateDeleteTestNo" parameterType="Integer">
+	</update>
+	
+	<!-- 입력될 점검 번호 조회 -->
+	<select id="getTestNo" resultType="equipVO">
+	</select>
+	
+<!-- ############################################################################################  -->
+																					<!-- 고장  -->
+	<!-- 고장 전체 리스트 -->
+	<select id="getFailList" resultType="equipVO">
+	SELECT *
+	FROM FAIL
+	</select>
+	
+	<!-- 고장 단건 조회-->
+	<select id="getFailInfo" parameterType="Integer" resultType="equipVO">
+	</select>
+	
+	<!-- 고장 등록 -->
+	<insert id="insertFail" parameterType="equipVO">
+	</insert>	   	
+	
+	<!-- 고장 수정 -->
+	<update id="updateFail" parameterType="equipVO">
+	</update>
+	
+	<!-- 고장 삭제 -->
+	<delete id="deleteFail" parameterType="Integer">
+	</delete>
+	
+	<!-- 고장 삭제 시 번호 정렬 update문-->
+	<update id="updateDeleteFailNo" parameterType="Integer">
+	</update>
+	
+	<!-- 입력될 고장 번호 조회 -->
+	<select id="getFailNo" resultType="equipVO">
+	</select>
 	
 </mapper>
