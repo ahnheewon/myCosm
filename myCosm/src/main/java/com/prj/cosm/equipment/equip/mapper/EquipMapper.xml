@@ -84,11 +84,24 @@
 	WHERE EQUIP_NO = #{equipNo}
 	</delete>
 	
+	<!-- 설비 삭제 시 설비별 가동 시간 데이터 삭제 -->
+	<delete id="deleteEquipTime" parameterType="Integer">
+	DELETE EQUIP_TIME
+	WHERE TIME_EQUIP_NO = #{equipNo}
+	</delete>
+	
 	<!-- 설비 삭제 시 번호 정렬 update문 -->
 	<update id="updateDeleteEquipNo" parameterType="Integer">
 	UPDATE EQUIP
 	SET EQUIP_NO = EQUIP_NO-1
 	WHERE EQUIP_NO <![CDATA[>]]> #{equipNo}
+	</update>
+	
+	<!-- 설비 삭제 시 번호 정렬 update문 -->
+	<update id="updateDeleteTimeEquipNo" parameterType="Integer">
+	UPDATE EQUIP_TIME
+	SET TIME_EQUIP_NO = TIME_EQUIP_NO-1
+	WHERE TIME_EQUIP_NO <![CDATA[>]]> #{equipNo}
 	</update>
 	
 	<!-- 입력될 설비 번호 조회 -->
@@ -106,7 +119,7 @@
 	
 	<!-- 공정 단건조회 -->
 	<select id="getProcessInfo" parameterType="Integer" resultType="equipVO">
-		SELECT process_name, process_content, process_seq
+		SELECT process_no,process_name, process_content, process_seq
 		FROM process
 		Where process_no= #{value}
 	</select>

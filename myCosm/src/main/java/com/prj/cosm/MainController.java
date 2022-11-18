@@ -64,21 +64,7 @@ public class MainController {
 		return "/equipment/process";
 		}
 				
-		// 공정 전체 리스트 조회 데이터
-		@GetMapping("/equipment/processList")
-		@ResponseBody
-		public List<EquipVO> progress(){
 		
-		return eService.getProcessList();
-		}
-		
-		// 공정 등록
-		@PostMapping("/equipment/insertProcess")
-		public String insertProcess(EquipVO vo, RedirectAttributes ratt) {
-				Map<String, Object> result = eService.insertProcess(vo);
-				ratt.addFlashAttribute("msg",result.get("result")+"건이 등록되었습니다.");
-				return "redirect:/equipment/process"; 
-		}
 		
 		
 		// 설비 전체 리스트 조회 데이터
@@ -104,7 +90,7 @@ public class MainController {
 			
 		}
 		
-		// 설비 수정!!!
+		// 설비 수정
 		@PostMapping("/equipment/updateEquip")
 		@ResponseBody
 		public EquipVO updateEquip(EquipVO vo) {
@@ -112,27 +98,45 @@ public class MainController {
 		return vo; //"{re:true}"
 		}
 		
-		// 설비 삭제!!!
+		// 설비 삭제, 설비별 가동시간도 함께 삭제
 		@DeleteMapping("/equipment/deleteEquip/{equipNo}")
 		@ResponseBody
 		public int deleteEquip(@PathVariable int equipNo) {
-			int result= eService.deleteEquip(equipNo);
+			int result = eService.deleteEquip(equipNo);
+			result = result + eService.deleteEquipTime(equipNo);
 		return result;
 		}
 		
-		// 설비 삭제시 번호 정렬 update문 
+		// 설비 삭제시 번호 정렬, 설비별 가동시간도 함께 update문 
 		@PostMapping("/equipment/updateDeleteEquipNo/{equipNo}")
 		@ResponseBody
 		public int updateDeleteEquipNo(@PathVariable int equipNo) {
 			int result= eService.updateDeleteEquipNo(equipNo);
+			result = result + eService.updateDeleteTimeEquipNo(equipNo);
 		return result; 
 		}
 		
+//================================================================================================================================	
+		// 공정 전체 리스트 조회 데이터
+		@GetMapping("/equipment/processList")
+		@ResponseBody
+		public List<EquipVO> progress(){
+				
+		return eService.getProcessList();
+		}
+				
+		// 공정 등록
+		@PostMapping("/equipment/insertProcess")
+		public String insertProcess(EquipVO vo, RedirectAttributes ratt) {
+				eService.insertProcess(vo);
+		return "redirect:/equipment/process"; 
+		}
+		
 		// 공정 단건 조회
-				@GetMapping("/equipment/getProcessInfo")
-				@ResponseBody
-				public EquipVO getProcessInfo(Model model, int processNo) {
-					return eService.getProcessInfo(processNo);
+		@GetMapping("/equipment/getProcessInfo")
+		@ResponseBody
+		public EquipVO getProcessInfo(Model model, int processNo) {
+		return eService.getProcessInfo(processNo);
 					
 				}
 				

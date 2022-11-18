@@ -24,8 +24,14 @@ public interface EquipService {
 	// 삭제
 	public int deleteEquip(@Param("equipNo")int equipNo); // 컬럼을 넘길 때는 bno
 	
+	// 설비 삭제 시 설비별 가동 시간 데이터 삭제
+	public int deleteEquipTime(@Param("equipNo")int equipNo); 
+	
 	//삭제 시 번호 정렬 update문
 	public int updateDeleteEquipNo(@Param("equipNo")int equipNo);
+	
+	//삭제 시 설비별 가동 시간 설비 번호 정렬 update문 
+	public int updateDeleteTimeEquipNo(@Param("equipNo")int equipNo); 
 	
 	// 입력될 번호를 조회
 	public EquipVO getEquipNo();

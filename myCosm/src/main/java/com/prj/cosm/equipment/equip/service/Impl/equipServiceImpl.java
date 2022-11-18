@@ -18,7 +18,7 @@ public class equipServiceImpl implements EquipService {
 	@Autowired
 	EquipMapper mapper;
 	
-	
+	//설비
 	
 	@Override
 	public List<EquipVO> getEquipList() {
@@ -49,8 +49,20 @@ public class equipServiceImpl implements EquipService {
 	}
 
 	@Override
+	public int deleteEquipTime(int equipNo) {
+		return mapper.deleteEquipTime(equipNo);
+	}
+	
+	
+	@Override
 	public int updateDeleteEquipNo(int equipNo) {
 		return mapper.updateDeleteEquipNo(equipNo);
+	}
+
+	@Override
+	public int updateDeleteTimeEquipNo(int equipNo) {
+		
+		return mapper.updateDeleteTimeEquipNo(equipNo);
 	}
 
 	
@@ -59,6 +71,9 @@ public class equipServiceImpl implements EquipService {
 		return mapper.getEquipNo();
 	}
 
+//============================================================================================================================
+	
+	//공정 
 	
 	@Override
 	public EquipVO getProcessNo() {
@@ -103,8 +118,12 @@ public class equipServiceImpl implements EquipService {
 
 	@Override
 	public int updateDeleteProcessNo(int processNo) {
-		return mapper.updateDeleteEquipNo(processNo);
+		return mapper.updateDeleteProcessNo(processNo);
 	}
+
+	
+
+
 
 
 
