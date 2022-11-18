@@ -10,11 +10,12 @@
 	<select id="getEquipList" resultType="equipVO">
 		SELECT *
 		FROM equip
+		ORDER BY EQUIP_NO
 	</select>
 	
 	<!-- 설비 단건조회 -->
 	<select id="getEquipInfo" parameterType="Integer" resultType="equipVO">
-		SELECT e.equip_name, e.equip_type, e.equip_std_vibe, e.equip_std_temp, e.equip_date,e.equip_purpose, t.time_start_date, t.time_end_date
+		SELECT e.equip_no, e.equip_name, e.equip_type, e.equip_std_vibe, e.equip_std_temp, e.equip_date,e.equip_purpose, t.time_start_date, t.time_end_date
 		FROM equip e, equip_time t
 		Where e.equip_no = t.time_equip_no
 		and e.equip_no= #{value}
@@ -58,30 +59,56 @@
 	UPDATE equip
 	<set>
 		<if test="equipName !=null and !equipName.equals('')">
-		equipName = #{equipName},
+		equip_name = #{equipName},
 		</if>
 		<if test="equipType !=null and !equipType.equals('')">
-		equipType = #{equipType},
+		equip_type = #{equipType},
 		</if>
 		<if test="equipStdVibe !=null">
-		equipStdVibe = #{equipStdVibe},
+		equip_std_vibe = #{equipStdVibe},
 		</if>
 		<if test="equipStdTemp !=null">
-		equipStdTemp = #{equipStdTemp},
+		equip_std_temp = #{equipStdTemp},
 		</if>
 		<if test="equipPurpose !=null and !equipPurpose.equals('')">
-		equipPurpose = #{equipPurpose},
+		equip_purpose = #{equipPurpose}
 		</if>									
 	</set>
+		WHERE equip_no = #{equipNo}
 	
-		WHERE= equipNo = #{equipNo}
+	</update>
 	
+	<!-- 설비 삭제 -->
+	<delete id="deleteEquip" parameterType="Integer">
+	DELETE EQUIP
+	WHERE EQUIP_NO = #{equipNo}
+	</delete>
+	
+	<!-- 설비 삭제 시 번호 정렬 update문 -->
+	<update id="updateDeleteEquipNo" parameterType="Integer">
+	UPDATE EQUIP
+	SET EQUIP_NO = EQUIP_NO-1
+	WHERE EQUIP_NO <![CDATA[>]]> #{equipNo}
 	</update>
 	
 	<!-- 입력될 설비 번호 조회 -->
 	<select id="getEquipNo" resultType="equipVO">
 		SELECT NVL(MAX(equip_no),0) + 1 AS equip_no
 		FROM EQUIP
+	</select>
+	
+	<!-- 공정 전체 리스트 -->
+	<select id="getProcessList" resultType="equipVO">
+		SELECT *
+		FROM PROCESS
+		ORDER BY PROCESS_NO
+	</select>
+	
+	<!-- 공정 단건조회 -->
+	<select id="getProcessInfo" parameterType="Integer" resultType="equipVO">
+		SELECT process_name, process_content, process_seq
+		FROM process
+		Where process_no= #{value}
 	</select>
 	
 	<!-- 공정 등록 -->
@@ -97,23 +124,39 @@
 								,#{processSeq} )	
 	</insert>
 	
-	<!-- 공정 단건조회 -->
-	<select id="getProcessInfo" parameterType="Integer" resultType="equipVO">
-		SELECT process_name, process_content, process_seq
-		FROM process
-		Where process_no= #{value}
-	</select>
-	
-	<!-- 공정 전체 리스트 -->
-	<select id="getProcessList" resultType="equipVO">
-		SELECT *
-		FROM PROCESS
-	</select>
-	
 	<!-- 입력될 공정 번호 조회 -->
 	<select id="getProcessNo" resultType="equipVO">
 		SELECT NVL(MAX(process_no),0) + 1 AS process_no
 		FROM process
 	</select>
+	
+	<!-- 공정 수정 -->
+	<update id="updateProcess" parameterType="equipVO">
+	UPDATE process
+		<set>
+			<if test="processName !=null and !processName.equals('')">
+			process_name = #{processName},
+			</if>
+			<if test="processContent !=null and !processContent.equals('')">
+			process_content = #{processContent},
+			</if>
+			<if test="processSeq !=null and !processSeq.equals('')">
+			process_seq = #{processSeq}</if>								
+		</set>
+	WHERE process_no = #{processNo}
+	</update>
+	
+	<!-- 공정 삭제 -->
+	<delete id="deleteProcess" parameterType="Integer">
+	DELETE process
+	WHERE process_no = #{processNo}
+	</delete>
+	
+	<!-- 공정 삭제 시 번호 정렬 update문 -->
+	<update id="updateDeleteProcessNo" parameterType="Integer">
+	UPDATE PROCESS
+	SET PROCESS_NO = PROCESS_NO-1
+	WHERE PROCESS_NO <![CDATA[>]]> #{processNo}
+	</update>
 	
 </mapper>

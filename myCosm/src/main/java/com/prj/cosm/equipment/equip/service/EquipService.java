@@ -24,8 +24,11 @@ public interface EquipService {
 	// 삭제
 	public int deleteEquip(@Param("equipNo")int equipNo); // 컬럼을 넘길 때는 bno
 	
+	//삭제 시 번호 정렬 update문
+	public int updateDeleteEquipNo(@Param("equipNo")int equipNo);
+	
 	// 입력될 번호를 조회
-	public EquipVO getProcessNo();
+	public EquipVO getEquipNo();
 	
 //===================================================================================================
 	//공정 
@@ -44,8 +47,12 @@ public interface EquipService {
 	
 	// 삭제
 	public int deleteProcess(@Param("processNo")int processNo); 
+	
+	//삭제 시 번호 정렬 update문
+	public int updateDeleteProcessNo(@Param("processNo")int processNo);
+	
 
 	// 입력될 번호를 조회
-	public EquipVO getEquipNo();
+		public EquipVO getProcessNo();
 	
 }

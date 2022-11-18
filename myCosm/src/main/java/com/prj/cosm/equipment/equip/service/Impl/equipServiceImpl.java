@@ -49,10 +49,17 @@ public class equipServiceImpl implements EquipService {
 	}
 
 	@Override
+	public int updateDeleteEquipNo(int equipNo) {
+		return mapper.updateDeleteEquipNo(equipNo);
+	}
+
+	
+	@Override
 	public EquipVO getEquipNo() {
 		return mapper.getEquipNo();
 	}
 
+	
 	@Override
 	public EquipVO getProcessNo() {
 	
@@ -93,6 +100,14 @@ public class equipServiceImpl implements EquipService {
 		return result;
 
 	}
+
+	@Override
+	public int updateDeleteProcessNo(int processNo) {
+		return mapper.updateDeleteEquipNo(processNo);
+	}
+
+
+
 
 
 	

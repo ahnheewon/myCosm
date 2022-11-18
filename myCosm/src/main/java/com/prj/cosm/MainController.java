@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -111,6 +112,22 @@ public class MainController {
 		return vo; //"{re:true}"
 		}
 		
+		// 설비 삭제!!!
+		@DeleteMapping("/equipment/deleteEquip/{equipNo}")
+		@ResponseBody
+		public int deleteEquip(@PathVariable int equipNo) {
+			int result= eService.deleteEquip(equipNo);
+		return result;
+		}
+		
+		// 설비 삭제시 번호 정렬 update문 
+		@PostMapping("/equipment/updateDeleteEquipNo/{equipNo}")
+		@ResponseBody
+		public int updateDeleteEquipNo(@PathVariable int equipNo) {
+			int result= eService.updateDeleteEquipNo(equipNo);
+		return result; 
+		}
+		
 		// 공정 단건 조회
 				@GetMapping("/equipment/getProcessInfo")
 				@ResponseBody
@@ -118,6 +135,31 @@ public class MainController {
 					return eService.getProcessInfo(processNo);
 					
 				}
+				
+		// 공정 수정
+		@PostMapping("/equipment/updateProcess")
+		@ResponseBody
+		public EquipVO updateProcess(EquipVO vo) {
+		eService.updateProcess(vo);
+		return vo; //"{re:true}"
+		}
+				
+		// 공정 삭제
+		@DeleteMapping("/equipment/deleteProcess/{processNo}")
+		@ResponseBody
+		public int deleteProcess(@PathVariable int processNo) {
+			int result= eService.deleteProcess(processNo);
+			return result;
+		}
+				
+		// 공정 삭제시 번호 정렬 update문 
+		@PostMapping("/equipment/updateDeleteProcessNo/{processNo}")
+		@ResponseBody
+		public int updateDeleteProcessNo(@PathVariable int processNo) {
+			int result= eService.updateDeleteProcessNo(processNo);
+			return result; 
+		}		
+		
 		
 	// 첫 화면
 	@GetMapping("/main")
