@@ -51,9 +51,10 @@ public class MainController {
 		public String equipmentProcess(Model model) {
 			
 			model.addAttribute("pno",eService.getProcessNo().getProcessNo());
-			model.addAttribute("eno",eService.getEquipNo().getEquipNo());
-			model.addAttribute("ep",eService.getProcessList());
-			
+			model.addAttribute("eno",eService.getEquipNo().getEquipNo()); // 다음 설비 번호 조회
+			model.addAttribute("epl",eService.getProcessList()); // 현재 사용가능한 공정 번호 조회
+			model.addAttribute("ep",eService.getEquipProcess()); // 설비에서 이용중인 공정 번호 조회
+	
 		return "/equipment/process";
 		}	
 		
@@ -146,11 +147,12 @@ public class MainController {
 			return result;
 		}
 				
-		// 공정 삭제시 번호 정렬 update문 
+		// 공정 삭제시 번호 정렬, 적용공정 update문
 		@PostMapping("/equipment/updateDeleteProcessNo/{processNo}")
 		@ResponseBody
 		public int updateDeleteProcessNo(@PathVariable int processNo) {
 			int result= eService.updateDeleteProcessNo(processNo);
+			result = result + eService.updateDeleteEquipProcess(processNo);
 			return result; 
 		}		
 

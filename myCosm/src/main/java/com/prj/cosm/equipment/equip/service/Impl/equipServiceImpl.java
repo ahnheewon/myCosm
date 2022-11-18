@@ -71,6 +71,12 @@ public class equipServiceImpl implements EquipService {
 	public EquipVO getEquipNo() {
 		return mapper.getEquipNo();
 	}
+	
+	@Override
+	public List<EquipVO> getEquipProcess() {
+		
+		return mapper.getEquipProcess();
+	}
 
 //============================================================================================================================
 	
@@ -121,6 +127,13 @@ public class equipServiceImpl implements EquipService {
 	public int updateDeleteProcessNo(int processNo) {
 		return mapper.updateDeleteProcessNo(processNo);
 	}
+	
+	@Override
+	public int updateDeleteEquipProcess(int equipProcess) {
+
+		return mapper.updateDeleteEquipProcess(equipProcess);
+	}
+
 
 //===================================================================================================
 	
@@ -199,6 +212,9 @@ public class equipServiceImpl implements EquipService {
 	public EquipVO getFailNo() {
 		return mapper.getFailNo();
 	}
+
+
+
 
 
 	

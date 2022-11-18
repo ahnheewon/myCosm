@@ -42,6 +42,9 @@ public interface EquipMapper {
 			// 입력될 번호를 조회
 			public EquipVO getEquipNo();
 			
+			// 이용중인 공정 번호 조회
+			public List<EquipVO> getEquipProcess();
+			
 //===================================================================================================
 	
 	// 공정 
@@ -61,8 +64,11 @@ public interface EquipMapper {
 			// 삭제
 			public int deleteProcess(@Param("processNo")int processNo); 
 			
-			//삭제 시 번호 정렬 update문
-			public int updateDeleteProcessNo(@Param("processNo")int processNo);
+			// 삭제 시 번호 정렬 update문
+			public int updateDeleteProcessNo(@Param("processNo")int processNo); // 설비 테이블이랑 연동되어 있다
+			
+			// 공정 삭제 시 적용공정 정렬 update문
+			public int updateDeleteEquipProcess(@Param("equipProcess")int equipProcess);
 			
 			// 입력될 번호를 조회
 			public EquipVO getProcessNo();

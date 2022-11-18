@@ -110,6 +110,12 @@
 		FROM EQUIP
 	</select>
 	
+	<!-- 이용중인 공정 번호 조회 (다중행)-->
+	<select id="getEquipProcess" resultType="equipVO">
+	 SELECT DISTINCT(EQUIP_PROCESS)
+	 FROM EQUIP
+	</select>
+	
 <!-- ############################################################################################  -->
 																					<!-- 공정  -->	
 	
@@ -174,6 +180,13 @@
 	SET PROCESS_NO = PROCESS_NO-1
 	WHERE PROCESS_NO <![CDATA[>]]> #{processNo}
 	</update>
+	
+	<!-- 공정 삭제 시 적용공정 정렬 update문 -->
+	<update id="updateDeleteEquipProcess" parameterType="Integer">
+	update equip
+    set equip_process = equip_process-1
+    where equip_process <![CDATA[>]]> #{equipProcess}
+    </update>
 	
 <!-- ############################################################################################  -->
 																					<!-- 점검  -->
