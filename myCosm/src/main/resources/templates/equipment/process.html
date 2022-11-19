@@ -22,28 +22,38 @@
 </head>
 <body>
 
- 	<div layout:fragment="content" style="height: 900px; overflow: scroll">
+ 	<div layout:fragment="content" style="height: 900px; overflow: scroll; margin:15px;">
  	
 		  <!-- model and view로 보낸 데이터 [[${pno}]] 이런식으로 써야합니다 밖에서 쓰려면. -->
 		  <h2>공정 관리</h2>
 		
 		  <div class="row">
 			        <div class="column">
-			          <h5>공정 관리</h5>
-			         	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">
-						등록</button>
+			           <h5>공정 관리</h5>
+			           <div class="searchbox">
+			            <div class="header">
+			         	<button type="button" class="btn btn-dark btn-sm margin5"
+			         	data-bs-toggle="modal" data-bs-target="#myModal1">등록</button>
+						     <input onkeyup="filter()" style="float:right;" type="text" id="value" placeholder="Type to Search">
+						 </div>
+      				   </div>
 
-			          <div id="processList">
-		                 
-	              	  </div>
+			           <div id="processList">
+            	   	   </div>
 
 		        	</div>
 		
 			        <div class="column">
-			          <h5>설비 관리</h5><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2">등록</button>
+			          <h5>설비 관리</h5>
+			          <div class="searchbox">
+			            <div class="header">
+			         	<button type="button" class="btn btn-dark btn-sm margin5"
+			         	data-bs-toggle="modal" data-bs-target="#myModal2">등록</button>
+						     <input style="float:right;" type="text" id="value" placeholder="Type to Search">
+						 </div>
+      				   </div>
 					  <div id="equipList">
-		                 
-	              	  </div>
+   					  </div>
 			        </div>
 		
 		  </div>
@@ -160,7 +170,7 @@
 					<!-- Modal Header -->
 					<div class="modal-header">
 					<h4 class="modal-title"><span id="whatEno"></span>설비 정보</h4>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					<button type="button" onclick="cancelUpdateEquip()" class="btn-close" data-bs-dismiss="modal"></button>
 					</div>
 		
 				<form id="updateForm1" class="updateForm" method="post" name="equip">
@@ -222,7 +232,7 @@
 			<!-- Modal Header -->
 			<div class="modal-header">
 			<h4 class="modal-title"><span id="whatPno"></span>공정 정보</h4>
-			<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			<button type="button" onclick="cancelUpdateEquip()" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 	
 			<form id="updateForm2" method="post" name="process">
@@ -268,6 +278,44 @@
 /* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT */
 /* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT *//* JAVASCRIPT */	
 
+/* 검색 기능 함수 */
+function filter(){
+	
+        var value, name, i;   
+        const search = document.getElementById("value")
+         value = search.value.toUpperCase();
+        
+		var val =[];
+		
+        url="/equipment/processList"
+    		fetch(url) 
+    		.then(res=>res.json())
+    		.then(obj=>{
+    			console.log(obj);
+    			
+    			for(i=0; i < obj.length; i++){
+    			val.push(processGrid.getValue(i,'processName')); // 갖고있는 값
+    			
+    			}
+    		
+				for(i=0; i < val.length; i++){		
+		
+		    	
+				}
+        // item = document.getElementsByClassName("item");
+
+   /*      for(i=0;i<item.length;i++){
+          name = item[i].processName
+          if(name[0].innerHTML.toUpperCase().indexOf(value) > -1){
+            item[i].style.display = "flex";
+          }else{
+            item[i].style.display = "none";
+          }
+        }
+ */
+    })
+}
+
 /* 적용 공정 선택하게 하는 함수 */ 
 	function changeSelect() { 
 		let ep = document.querySelector('#equipProcessSelect').value;
@@ -280,16 +328,7 @@
 									 //
 									 // ******
 														
-/* 설비 리스트 불러오는 아작스 */
-    
-    url="/equipment/equipList"
-    fetch(url) 
-    .then(res=>res.json())
-    .then(obj=>{
-        console.log(obj);
-        equip.resetData(obj);
-        
-    })
+
     
 /*  설비 단건조회 불러오는 아작스 함수 */
 
@@ -420,17 +459,6 @@
 										//  *****
 
 
-/*  공정 리스트 불러오는 아작스 */
-
-		url="/equipment/processList"
-	    fetch(url) 
-	    .then(res=>res.json())
-	    .then(obj=>{
-	        console.log(obj);
-	        process.resetData(obj);
-	       
-	    })
-	  
 
 /* 공정 수정 버튼 누른 함수 */
 	function updateProcessBtnClick() {
@@ -580,7 +608,7 @@
 		}
 		
 /*  공정 그리드  */	
-		const process = new tui.Grid({ 
+		const processGrid = new tui.Grid({ 
 		    el: document.querySelector('#processList'),
 			pagination:true,
 			pageOptions: {
@@ -606,9 +634,22 @@
 		    }
 		    ]
 		});
+		
+
+		/*  공정 리스트 불러오는 아작스 */
+
+		url="/equipment/processList"
+		fetch(url) 
+		.then(res=>res.json())
+		.then(obj=>{
+			console.log(obj);
+			processGrid.resetData(obj);
+			       
+		})
+			  
 	    
 /*  설비 그리드  */	
-	    const equip = new tui.Grid({ // 설비 그리드
+	    const equipGrid = new tui.Grid({ // 설비 그리드
 		    el: document.querySelector('#equipList'),
 			pagination:true,
 			pageOptions: {
@@ -635,16 +676,27 @@
 		    ]
 		});
 
+		/* 설비 리스트 불러오는 아작스 */
+			    
+		url="/equipment/equipList"
+		fetch(url) 
+		.then(res=>res.json())
+		.then(obj=>{
+			console.log(obj);
+			equipGrid.resetData(obj);
+			        
+		})
+		
 	    /* 설비 그리드 셀 클릭-> 모달 팝업 이벤트 */
 	    
-	    equip.on('click', ev => {
-	    	console.log(equip.getValue(ev.rowKey,ev.columnName));
-	    	const eno = equip.getValue(ev.rowKey,ev.columnName);
+	    equipGrid.on('click', ev => {
+	    	const eno = equipGrid.getValue(ev.rowKey,ev.columnName);
+	    	console.log(eno);
 	   /*  if(equip.getValue(ev.rowKey,ev.columnName) == equipInfo)) */
 	    	console.log(ev);
 	    	
 	    	if(ev.columnName == 'equipNo'){
-				if(equip.getValue(ev.rowKey,ev.columnName) != null){
+				if(eno != null){
 		    	const myModal3 = new bootstrap.Modal('#myModal3',{backdrop: 'static',keyboard:false})
 		    	// 생성 시 모달 속성을 넣어줍니다.
 		    	const modalToggle1 = document.getElementById('myModal3'); 
@@ -658,14 +710,14 @@
 	    
 		 /* 공정 그리드 셀 클릭-> 모달 팝업 이벤트 */
 		 
-	    process.on('click', ev => {
-	    	console.log(process.getValue(ev.rowKey,ev.columnName));
-	    	const pno = process.getValue(ev.rowKey,ev.columnName);
+	    processGrid.on('click', ev => {
+	    	const pno = processGrid.getValue(ev.rowKey,ev.columnName);
+	    	console.log(pno);
 	   	/* if(equip.getValue(ev.rowKey,ev.columnName) == equipInfo)) */
 	    	console.log(ev);
 	    	
 	    	if(ev.columnName == 'processNo'){
-				if(process.getValue(ev.rowKey,ev.columnName) != null){
+				if(pno != null){
 		    	const myModal4 = new bootstrap.Modal('#myModal4',{backdrop: 'static',keyboard:false})
 		    	// 생성 시 모달 속성을 넣어줍니다.
 		    	const modalToggle2 = document.getElementById('myModal4'); 
@@ -680,7 +732,7 @@
 		});
 	    
 		
-		//updateBtn();
+
 		
 </script>
 

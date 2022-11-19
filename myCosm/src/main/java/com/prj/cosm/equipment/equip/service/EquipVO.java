@@ -59,7 +59,8 @@ public class EquipVO {
 	
 	private int testNo;
 	private int testEquipNo;
-	private String testDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date testDate;
 	private String testReason;
 	private String testPs;
 	private String testYn;
@@ -79,6 +80,13 @@ public class EquipVO {
 	private String failRepairContent;
 	private String failEffect;
 	private String failCode;
+	
+	// 공통코드
+	
+	private String codeNo;
+	private String codeName;
+	private String codeAdno;
+
 	
 	
 	

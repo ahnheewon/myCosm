@@ -1,9 +1,7 @@
 package com.prj.cosm;
 
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +12,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.prj.cosm.equipment.equip.service.EquipService;
 import com.prj.cosm.equipment.equip.service.EquipVO;
-
-
-
+import com.prj.cosm.equipment.work.service.WorkService;
+import com.prj.cosm.equipment.work.service.WorkVO;
 import com.prj.cosm.sales.orders.service.OrdersService;
 import com.prj.cosm.sales.orders.service.OrdersVO;
 import com.prj.cosm.user.emp.service.EmpService;
@@ -39,9 +35,12 @@ public class MainController {
 
 	@Autowired
 	EquipService eService;
+	
+	@Autowired
+	WorkService wService;
 		
 		// 첫 화면
-		@RequestMapping("/")
+		@RequestMapping("/equipment/main")
 		public String main() {
 			return "/equipment/main";
 		}
@@ -158,27 +157,35 @@ public class MainController {
 
 //================================================================================================================================	
 
-	// 보수 관리 페이지 이동화면
-	@RequestMapping("/equipment/maintenance")
-	public String equipmentMaintenance(Model model) {
-		return "/equipment/maintenance";
-	}
-	
-	// 점검 전체 리스트 조회 데이터
-	@GetMapping("/equipment/testList")
-	@ResponseBody
-	public List<EquipVO> test(){
-					
-	return eService.getTestList();
-	}
+		// 유지 관리 페이지 이동화면
+		@RequestMapping("/equipment/maintenance")
+		public String equipmentMaintenance(Model model) {
+			return "/equipment/maintenance";
+		}
 		
-	// 고장 전체 리스트 조회 데이터
-	@GetMapping("/equipment/failList")
-	@ResponseBody
-	public List<EquipVO> fail(){
-					
-	return eService.getFailList();
-	}
+		// 점검 전체 리스트 조회
+		@GetMapping("/equipment/testList")
+		@ResponseBody
+		public List<EquipVO> test(){
+						
+		return eService.getTestList();
+		}
+			
+		// 고장 전체 리스트 조회
+		@GetMapping("/equipment/failList")
+		@ResponseBody
+		public List<EquipVO> fail(){
+						
+		return eService.getFailList();
+		}
+		
+		// 공사 전체 리스트 조회
+		@GetMapping("/equipment/workList")
+		@ResponseBody
+		public List<WorkVO> work(){
+								
+		return wService.getWorkList();
+		}
 	
 //================================================================================================================================
 
@@ -187,13 +194,7 @@ public class MainController {
 		public String equipmentPart(Model model) {
 			return "/equipment/part";
 		}
-//================================================================================================================================	
 
-		// 공사 관리 페이지 이동화면
-		@RequestMapping("/equipment/construction")
-		public String equipmentConstruction(Model model) {
-			return "/equipment/construction";
-		}
 		
 //================================================================================================================================	
 		

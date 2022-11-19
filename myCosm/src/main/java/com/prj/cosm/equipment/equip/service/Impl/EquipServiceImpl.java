@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ import com.prj.cosm.equipment.equip.service.EquipService;
 import com.prj.cosm.equipment.equip.service.EquipVO;
 
 @Service
-public class equipServiceImpl implements EquipService {
+public class EquipServiceImpl implements EquipService {
 
 	@Autowired
 	EquipMapper mapper;
@@ -77,7 +76,7 @@ public class equipServiceImpl implements EquipService {
 		
 		return mapper.getEquipProcess();
 	}
-
+	
 //============================================================================================================================
 	
 																			//공정 
@@ -212,6 +211,7 @@ public class equipServiceImpl implements EquipService {
 	public EquipVO getFailNo() {
 		return mapper.getFailNo();
 	}
+
 
 
 
